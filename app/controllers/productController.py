@@ -8,6 +8,7 @@ import requests
 CREATE_PRODUCT_SERVICE_URL = os.getenv("CREATE_PRODUCT_SERVICE_URL", "http://localhost:8000")
 READ_PRODUCT_SERVICE_URL = os.getenv("READ_PRODUCT_SERVICE_URL", "http://localhost:8002")
 UPDATE_PRODUCT_SERVICE_URL= os.getenv("UPDATE_PRODUCT_SERVICE_URL", "http://localhost:8003")
+DELETE_PRODUCT_SERVICE_URL= os.getenv("DELETE_PRODUCT_SERVICE_URL", "http://localhost:8004")
 
 def update_product(product_id: int, product_update: ProductUpdate, db: Session):
     """Actualiza un producto en `UpdateProduct` y lo sincroniza con `CreateProduct` y `ReadProduct"""
@@ -46,7 +47,8 @@ def sync_with_microservices(product):
 
     sync_services = [
         f"{CREATE_PRODUCT_SERVICE_URL}/sync-update",
-        f"{READ_PRODUCT_SERVICE_URL}/sync-update"
+        f"{READ_PRODUCT_SERVICE_URL}/sync-update",
+        f"{DELETE_PRODUCT_SERVICE_URL}/sync-update"
     ]
 
     product_data = {
