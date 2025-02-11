@@ -68,6 +68,7 @@ def sync_with_microservices(product):
                 print(f"⚠️ Error sincronizando con {service}. Código: {response.status_code}")
         except requests.exceptions.RequestException as e:
             print(f"❌ Error enviando solicitud a {service}: {e}")
+            
 
 
 
