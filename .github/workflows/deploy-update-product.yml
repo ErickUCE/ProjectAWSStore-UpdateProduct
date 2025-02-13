@@ -1,0 +1,38 @@
+name: Deploy UpdateProduct to AWS EC2 (Test)
+
+on:
+  push:
+    branches:
+      - test  # Se ejecuta cuando se sube código a la rama "test"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Conectar a la instancia EC2 y actualizar contenedor
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.AWS_EC2_HOST }}
+        username: ${{ secrets.AWS_EC2_USER }}
+        key: ${{ secrets.AWS_EC2_KEY }}
+        script: |
+          # Asegurar permisos para Docker en EC2
+          sudo usermod -aG docker $USER
+          newgrp docker
+          
+          # Iniciar sesión en Docker Hub
+          docker login -u "${{ secrets.DOCKERHUB_USER }}" -p "${{ secrets.DOCKERHUB_PASSWORD }}"
+          
+          # Detener y eliminar el contenedor anterior si existe
+          docker stop update-product-container || true
+          docker rm update-product-container || true
+          
+          # Descargar la última imagen desde Docker Hub
+          docker pull erickuce/update-product-service:latest
+          
+          # Ejecutar el nuevo contenedor con variables de entorno
+          docker run -d -p 8006:8006 --env-file .env --name update-product-container erickuce/update-product-service
+          
+          # Verificar si está corriendo
+          docker ps
