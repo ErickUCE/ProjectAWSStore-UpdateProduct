@@ -5,10 +5,10 @@ import os
 import requests
 
 # 🔥 URLs de los microservicios `CreateProduct` y `ReadProduct`
-CREATE_PRODUCT_SERVICE_URL = os.getenv("CREATE_PRODUCT_SERVICE_URL", "http://localhost:8000")
-READ_PRODUCT_SERVICE_URL = os.getenv("READ_PRODUCT_SERVICE_URL", "http://localhost:8002")
-UPDATE_PRODUCT_SERVICE_URL= os.getenv("UPDATE_PRODUCT_SERVICE_URL", "http://localhost:8003")
-DELETE_PRODUCT_SERVICE_URL= os.getenv("DELETE_PRODUCT_SERVICE_URL", "http://localhost:8004")
+CREATE_PRODUCT_SERVICE_URL = os.getenv("CREATE_PRODUCT_SERVICE_URL", "http://13.216.61.88:8000")
+READ_PRODUCT_SERVICE_URL = os.getenv("READ_PRODUCT_SERVICE_URL", "http://44.195.73.5:8007")
+UPDATE_PRODUCT_SERVICE_URL= os.getenv("UPDATE_PRODUCT_SERVICE_URL", "http://54.165.250.5:8006")
+DELETE_PRODUCT_SERVICE_URL= os.getenv("DELETE_PRODUCT_SERVICE_URL", "http://52.44.127.200:8005")
 
 def update_product(product_id: int, product_update: ProductUpdate, db: Session):
     """Actualiza un producto en `UpdateProduct` y lo sincroniza con `CreateProduct` y `ReadProduct"""
